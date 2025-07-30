@@ -1,0 +1,34 @@
+<aside class="admin-sidebar">
+    <nav class="nav flex-column">
+        <!-- Gunakan URL path untuk menentukan link mana yang aktif -->
+        <a class="nav-link <%= currentPath === '/admin/users' ? 'active' : '' %>" href="/admin/users">
+            Users
+        </a>
+        <a class="nav-link <%= currentPath === '/admin/banners' ? 'active' : '' %>" href="/admin/banners">
+            Banners
+        </a>
+        <a class="nav-link <%= currentPath === '/admin/laptops' ? 'active' : '' %>" href="/admin/laptops">
+            Laptops
+        </a>
+        <a class="nav-link <%= currentPath === '/admin/pc-parts' ? 'active' : '' %>" href="/admin/pc-parts">
+            PC Parts
+        </a>
+        <a class="nav-link <%= currentPath === '/admin/pc-rakitans' ? 'active' : '' %>" href="/admin/pc-rakitans">
+            Paket Rakitan
+        </a>
+        <a class="nav-link <%= currentPath === '/admin/console-and-handhelds' ? 'active' : '' %>" href="/admin/console-and-handhelds">
+            Consoles & Handhelds
+        </a>
+        <a class="nav-link <%= currentPath === '/admin/tech-news' ? 'active' : '' %>" href="/admin/tech-news">
+            Tech News
+        </a>
+        <a class="nav-link <%= currentPath === '/admin/checkouts' ? 'active' : '' %>" href="/admin/checkouts">
+            Pesanan
+        </a>
+        <a class="nav-link <%= currentPath === '/admin/customer-service' ? 'active' : '' %>" href="/admin/customer-service">
+            Pesan CS
+        </a>
+    </nav>
+</aside>
+
+<main class="admin-main">

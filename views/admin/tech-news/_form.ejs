@@ -1,0 +1,53 @@
+<div class="mb-3">
+    <label for="title" class="form-label">Judul Berita</label>
+    <input type="text" name="title" id="title" class="form-control" value="<%= item.title || oldInput.title || '' %>" required>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <label for="source" class="form-label">Sumber Berita</label>
+        <input type="text" name="source" id="source" class="form-control" value="<%= item.source || oldInput.source || '' %>" required>
+    </div>
+    <div class="col-md-6 mb-3">
+        <label for="date" class="form-label">Tanggal Publikasi</label>
+        <%
+            let dateValue = '';
+            if (item.date) {
+                // Format tanggal YYYY-MM-DD untuk input type="date"
+                dateValue = new Date(item.date).toISOString().split('T')[0];
+            } else if (oldInput.date) {
+                dateValue = oldInput.date;
+            }
+        %>
+        <input type="date" name="date" id="date" class="form-control" value="<%= dateValue %>" required>
+    </div>
+</div>
+
+<div class="mb-3">
+    <label for="excerpt" class="form-label">Kutipan (Excerpt)</label>
+    <textarea name="excerpt" id="excerpt" class="form-control" rows="3" required><%= item.excerpt || oldInput.excerpt || '' %></textarea>
+</div>
+
+<div class="mb-3">
+    <label for="readMoreUrl" class="form-label">URL Baca Selengkapnya</label>
+    <input type="url" name="readMoreUrl" id="readMoreUrl" class="form-control" value="<%= item.readMoreUrl || oldInput.readMoreUrl || '' %>">
+</div>
+
+<hr>
+
+<% if (item.imageUrl) { %>
+    <div class="mb-3">
+        <p><strong>Gambar Saat Ini:</strong></p>
+        <img src="<%= item.imageUrl %>" alt="Current Image" style="max-width: 200px; border-radius: 8px;">
+    </div>
+<% } %>
+
+<div class="mb-3">
+    <label for="image_upload" class="form-label">Upload Gambar Baru</label>
+    <input type="file" name="image_upload" class="form-control" accept="image/*">
+</div>
+<div class="mb-3">
+    <label for="imageUrl" class="form-label">Atau Gunakan URL Gambar</label>
+    <input type="text" name="imageUrl" id="imageUrl" class="form-control" placeholder="Kosongkan jika upload file" value="<%= !item.imageUrl?.startsWith('/uploads') ? (item.imageUrl || '') : '' %>">
+    <small class="form-text text-muted">Isi salah satu, upload akan diprioritaskan. <%= item.id ? 'Kosongkan keduanya jika tidak ingin mengubah gambar.' : '' %></small>
+</div>

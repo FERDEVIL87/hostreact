@@ -1,0 +1,73 @@
+<%- include('../../partials/header') %>
+<%- include('../../partials/sidebar') %>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">Manajemen <%= resourceName %></h2>
+    <a href="/admin/<%= resource %>/create" class="btn btn-primary">Tambah <%= resourceName %> Baru</a>
+</div>
+
+<%- include('../../partials/messages') %>
+
+<div class="card">
+    <div class="card-body">
+        <!-- Search dan Total -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="fw-bold text-info">Total Data: <%= total %></div>
+            <form method="get" class="d-flex" style="max-width: 400px;">
+                <input type="text" name="search" class="form-control form-control-sm me-2" placeholder="Cari username, email, atau role..." value="<%= search %>">
+                <button type="submit" class="btn btn-info btn-sm">Search</button>
+            </form>
+        </div>
+
+        <!-- Tabel -->
+        <div class="table-responsive">
+            <table class="table table-striped align-middle table-bordered">
+                <thead>
+                    <tr>
+                        <th style="width: 5%;"><%- createSortLink('ID', 'id') %></th>
+                        <th><%- createSortLink('Username', 'username') %></th>
+                        <th><%- createSortLink('Email', 'email') %></th>
+                        <th style="width: 10%;"><%- createSortLink('Role', 'role') %></th>
+                        <th style="width: 20%;"><%- createSortLink('Tanggal Daftar', 'created_at') %></th>
+                        <th style="width: 15%;">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (items.length > 0) { %>
+                        <% items.forEach(item => { %>
+                            <tr>
+                                <td><%= item.id %></td>
+                                <td><%= item.username %></td>
+                                <td><%= item.email %></td>
+                                <td>
+                                    <% if (item.role === 'admin') { %>
+                                        <span class="badge bg-success text-capitalize"><%= item.role %></span>
+                                    <% } else { %>
+                                        <span class="badge bg-secondary text-capitalize"><%= item.role %></span>
+                                    <% } %>
+                                </td>
+                                <td><%= new Date(item.createdAt).toLocaleString('id-ID', { dateStyle: 'medium', timeStyle: 'short' }) %></td>
+                                <td>
+                                    <a href="/admin/<%= resource %>/edit/<%= item.id %>" class="btn-edit">Edit</a>
+                                    <% if (loggedInUserId !== item.id) { %>
+                                        <form action="/admin/<%= resource %>/delete/<%= item.id %>?_method=DELETE" method="POST" class="d-inline" onsubmit="return confirm('Yakin hapus user ini? Akun yang dihapus tidak bisa dikembalikan.');">
+                                            <button type="submit" class="btn-delete">Hapus</button>
+                                        </form>
+                                    <% } %>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    <% } else { %>
+                        <tr>
+                            <td colspan="6" class="text-center p-4">Data tidak ditemukan.</td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+
+        <%- include('../../partials/pagination') %>
+    </div>
+</div>
+
+<%- include('../../partials/footer') %>

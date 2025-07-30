@@ -1,0 +1,80 @@
+<%- include('../../partials/header') %>
+<%- include('../../partials/sidebar') %>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="mb-0">Manajemen <%= resourceName %></h2>
+    <a href="/admin/<%= resource %>/create" class="btn btn-primary">Tambah <%= resourceName %> Baru</a>
+</div>
+
+<%- include('../../partials/messages') %>
+
+<div class="card">
+    <div class="card-body">
+        <!-- Search dan Total -->
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="fw-bold text-info">Total Data: <%= total %></div>
+            <form method="get" class="d-flex" style="max-width: 400px;">
+                <input type="text" name="search" class="form-control form-control-sm me-2" placeholder="Cari nama atau kategori..." value="<%= search %>">
+                <button type="submit" class="btn btn-info btn-sm">Search</button>
+            </form>
+        </div>
+
+        <!-- Tabel -->
+        <div class="table-responsive">
+            <table class="table table-striped align-middle table-bordered">
+                <thead>
+                    <tr>
+                        <th style="width: 10%;">Gambar</th>
+                        <th><%- createSortLink('Nama Paket', 'name') %></th>
+                        <th><%- createSortLink('Kategori', 'category') %></th>
+                        <th><%- createSortLink('Harga', 'price') %></th>
+                        <th style="width: 30%;">Spesifikasi Utama</th>
+                        <th style="width: 15%;">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (items.length > 0) { %>
+                        <% items.forEach(item => { %>
+                            <tr>
+                                <td>
+                                    <img src="<%= item.image %>" alt="<%= item.name %>" style="max-width: 70px; border-radius: 4px;" class="img-fluid">
+                                </td>
+                                <td><%= item.name %></td>
+                                <td><%= item.category %></td>
+                                <td class="text-end"><%= formatRupiah(item.price) %></td>
+                                <td>
+                                    <% if (item.specs && typeof item.specs === 'object') { %>
+                                        <ul class="list-unstyled mb-0 small">
+                                            <% Object.entries(item.specs).slice(0, 4).forEach(([key, value]) => { %>
+                                                <% if (value) { %>
+                                                    <li><strong><%= key %>:</strong> <%= value %></li>
+                                                <% } %>
+                                            <% }) %>
+                                            <% if (Object.keys(item.specs).length > 4) { %>
+                                                <li>...</li>
+                                            <% } %>
+                                        </ul>
+                                    <% } %>
+                                </td>
+                                <td>
+                                    <a href="/admin/<%= resource %>/edit/<%= item.id %>" class="btn-edit">Edit</a>
+                                    <form action="/admin/<%= resource %>/delete/<%= item.id %>?_method=DELETE" method="POST" class="d-inline" onsubmit="return confirm('Yakin hapus data ini?');">
+                                        <button type="submit" class="btn-delete">Hapus</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    <% } else { %>
+                        <tr>
+                            <td colspan="6" class="text-center p-4">Data tidak ditemukan.</td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+
+        <%- include('../../partials/pagination') %>
+    </div>
+</div>
+
+<%- include('../../partials/footer') %>

@@ -1,0 +1,18 @@
+<%- include('../../partials/header') %>
+<%- include('../../partials/sidebar') %>
+
+<h2 class="mb-4">Edit <%= resourceName %>: <%= item.title %></h2>
+<%- include('../../partials/messages') %>
+
+<div class="card">
+    <div class="card-body">
+        <form action="/admin/<%= resource %>/update/<%= item.id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+            <%- include('_form') %>
+            <div class="mt-4">
+                <button type="submit" class="btn btn-primary w-100">Simpan Perubahan</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<%- include('../../partials/footer') %>

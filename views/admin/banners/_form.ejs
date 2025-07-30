@@ -1,0 +1,50 @@
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <label for="brand" class="form-label">Brand</label>
+        <input type="text" name="brand" id="brand" class="form-control" value="<%= item.brand || oldInput.brand || '' %>" required>
+    </div>
+    <div class="col-md-6 mb-3">
+        <label for="name" class="form-label">Nama Produk</label>
+        <input type="text" name="name" id="name" class="form-control" value="<%= item.name || oldInput.name || '' %>" required>
+    </div>
+</div>
+
+<div class="mb-3">
+    <label for="slogan" class="form-label">Slogan</label>
+    <input type="text" name="slogan" id="slogan" class="form-control" value="<%= item.slogan || oldInput.slogan || '' %>" required>
+</div>
+
+<div class="mb-3">
+    <label for="features" class="form-label">Fitur Unggulan (Satu Fitur per Baris)</label>
+    <textarea name="features" id="features" class="form-control" rows="4" required><%= (item.features && item.features.join('\n')) || oldInput.features || '' %></textarea>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <label for="order_column" class="form-label">Urutan Tampil</label>
+        <input type="number" name="order_column" id="order_column" class="form-control" value="<%= item.order_column ?? (oldInput.order_column || 0) %>" required>
+    </div>
+    <div class="col-md-6 mb-3 d-flex align-items-end">
+        <div class="form-check form-switch">
+            <input class="form-check-input" type="checkbox" role="switch" id="is_active" name="is_active" <%= (item.is_active || oldInput.is_active) ? 'checked' : '' %>>
+            <label class="form-check-label" for="is_active">Aktifkan Banner</label>
+        </div>
+    </div>
+</div>
+<hr>
+<% if (item.imageSrc) { %>
+    <div class="mb-3">
+        <p><strong>Gambar Saat Ini:</strong></p>
+        <img src="<%= item.imageSrc %>" alt="Current Image" style="max-width: 200px; border-radius: 8px;">
+    </div>
+<% } %>
+
+<div class="mb-3">
+    <label for="image_upload" class="form-label">Upload Gambar Baru</label>
+    <input type="file" name="image_upload" class="form-control" accept="image/*">
+</div>
+<div class="mb-3">
+    <label for="imageSrc" class="form-label">Atau Gunakan URL Gambar</label>
+    <input type="text" name="imageSrc" id="imageSrc" class="form-control" placeholder="Kosongkan jika upload file" value="<%= !item.imageSrc?.startsWith('/uploads') ? (item.imageSrc || '') : '' %>">
+    <small class="form-text text-muted">Isi salah satu. Upload akan diprioritaskan. <%= item.id ? 'Kosongkan keduanya jika tidak ingin mengubah gambar.' : '' %></small>
+</div>

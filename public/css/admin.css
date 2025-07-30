@@ -1,0 +1,85 @@
+/* Buat file ini di backend/public/css/admin.css */
+
+body {
+    display: grid;
+    grid-template-columns: 280px 1fr; /* Lebar sidebar, sisa untuk konten */
+    grid-template-rows: auto 1fr; /* Header, sisa untuk konten */
+    grid-template-areas: 
+        "header header"
+        "sidebar main";
+    height: 100vh;
+    margin: 0;
+    background-color: #0d1117; /* Warna latar Github Dark */
+}
+
+.admin-header {
+    grid-area: header;
+    background-color: #161b22;
+    border-bottom: 1px solid #30363d;
+}
+
+.admin-sidebar {
+    grid-area: sidebar;
+    background-color: #161b22;
+    border-right: 1px solid #30363d;
+    padding: 1rem;
+    overflow-y: auto;
+}
+
+.admin-main {
+    grid-area: main;
+    padding: 2rem;
+    overflow-y: auto;
+}
+
+/* Styling Sidebar */
+.admin-sidebar .nav-link {
+    color: #c9d1d9;
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+    margin-bottom: 0.25rem;
+}
+
+.admin-sidebar .nav-link:hover {
+    background-color: #21262d;
+    color: #fff;
+}
+
+.admin-sidebar .nav-link.active {
+    background-color: #0969da;
+    color: #fff;
+    font-weight: 600;
+}
+
+/* Penyesuaian Bootstrap */
+.card {
+    background-color: #161b22 !important;
+    border: 1px solid #30363d !important;
+}
+.table {
+    --bs-table-bg: #161b22;
+    --bs-table-striped-bg: #21262d;
+    --bs-table-color: #c9d1d9;
+    border-color: #30363d;
+}
+
+/* Responsif untuk layar kecil */
+@media (max-width: 992px) {
+    body {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto 1fr;
+        grid-template-areas: 
+            "header"
+            "sidebar"
+            "main";
+    }
+    .admin-sidebar {
+        border-right: none;
+        border-bottom: 1px solid #30363d;
+        height: auto;
+        overflow-y: visible;
+    }
+    .admin-main {
+        padding: 1rem;
+    }
+}

@@ -1,0 +1,59 @@
+<div class="row">
+    <div class="col-md-6 mb-3">
+        <label for="name" class="form-label">Nama Paket</label>
+        <input type="text" name="name" id="name" class="form-control" value="<%= item.name || oldInput.name || '' %>" required>
+    </div>
+    <div class="col-md-6 mb-3">
+        <label for="price" class="form-label">Harga</label>
+        <input type="number" name="price" id="price" class="form-control" value="<%= item.price || oldInput.price || '' %>" required min="0" step="1">
+    </div>
+</div>
+
+<div class="mb-3">
+    <label for="category" class="form-label">Kategori</label>
+    <select name="category" id="category" class="form-select" required>
+        <option value="" disabled <%= !item.category && !oldInput.category ? 'selected' : '' %>>-- Pilih Kategori --</option>
+        <% categories.forEach(cat => { %>
+            <option value="<%= cat %>" <%= (item.category === cat || oldInput.category === cat) ? 'selected' : '' %>><%= cat %></option>
+        <% }) %>
+    </select>
+</div>
+
+<div class="mb-3">
+    <label for="description" class="form-label">Deskripsi Singkat</label>
+    <textarea name="description" id="description" class="form-control" rows="3"><%= item.description || oldInput.description || '' %></textarea>
+</div>
+
+<div class="mb-3">
+    <label for="specs" class="form-label">Spesifikasi (Format JSON)</label>
+    <%
+        // Siapkan nilai default untuk textarea specs
+        const defaultSpecs = { "CPU": "", "Motherboard": "", "RAM": "", "Storage": "", "GPU": "", "PSU": "", "Casing": "" };
+        let specsValue = oldInput.specs; // Prioritaskan input lama jika ada error
+        if (!specsValue) {
+            // Jika tidak ada input lama, gunakan data dari item atau default
+            specsValue = JSON.stringify(item.specs || defaultSpecs, null, 2);
+        }
+    %>
+    <textarea name="specs" id="specs" class="form-control" rows="8" required><%= specsValue %></textarea>
+    <small class="form-text text-muted">Edit nilai di dalam tanda kutip. Pastikan format JSON tetap valid.</small>
+</div>
+
+<hr>
+
+<% if (item.image) { %>
+    <div class="mb-3">
+        <p><strong>Gambar Saat Ini:</strong></p>
+        <img src="<%= item.image %>" alt="Current Image" style="max-width: 200px; border-radius: 8px;">
+    </div>
+<% } %>
+
+<div class="mb-3">
+    <label for="image_upload" class="form-label">Upload Gambar Baru</label>
+    <input type="file" name="image_upload" class="form-control" accept="image/*">
+</div>
+<div class="mb-3">
+    <label for="image" class="form-label">Atau Gunakan URL Gambar</label>
+    <input type="text" name="image" id="image" class="form-control" placeholder="Kosongkan jika upload file" value="<%= !item.image?.startsWith('/uploads') ? (item.image || '') : '' %>">
+    <small class="form-text text-muted">Isi salah satu, upload akan diprioritaskan. <%= item.id ? 'Kosongkan keduanya jika tidak ingin mengubah gambar.' : '' %></small>
+</div>
